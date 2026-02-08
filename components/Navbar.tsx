@@ -31,9 +31,9 @@ export default function Navbar() {
   ];
 
   const navicons: { [key: string]: React.ReactNode } = {
-    "Github": <FaGithub size={24}/>,
-    "LinkedIn": <FaLinkedin size={24}/>,
-    "Resume": <CgFileDocument size={24}/>,
+    "Github": <FaGithub size={28}/>,
+    "LinkedIn": <FaLinkedin size={28}/>,
+    "Resume": <CgFileDocument size={28}/>,
   }
   // ============================================
   // 4. HELPER - Get the hovered link's measurements
@@ -95,3 +95,4 @@ export default function Navbar() {
     </nav>
   );
 }
+
