@@ -5,7 +5,7 @@ import { CgFileDocument } from "react-icons/cg";
 
 export default function Footer() {
     return (
-        <footer className="mx-auto w-fit">
+        <footer className="mx-auto w-fit m-10">
             <nav className="mx-auto w-fit flex gap-3 mb-3">
                 <Link href="https://github.com/Jomak-x" target="_blank" className="text-orange-500 hover:text-orange-400 transition-colors">
                 <FaGithub size={24} />
