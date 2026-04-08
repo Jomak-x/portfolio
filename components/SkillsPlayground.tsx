@@ -88,11 +88,13 @@ function createBubble(
   width: number,
   height: number,
   compact: boolean,
-  topBound: number,
+  topBound: number
 ): RuntimeBubble {
   const skill = skills[index];
   const baseRadius = Math.round(
-    (compact ? 36 : 44) + skill.intensity * (compact ? 11 : 15) + skill.bubbleScale * 6,
+    (compact ? 36 : 44) +
+      skill.intensity * (compact ? 11 : 15) +
+      skill.bubbleScale * 6
   );
 
   return {
@@ -120,7 +122,7 @@ function respawnBubble(
   index: number,
   width: number,
   compact: boolean,
-  topBound: number,
+  topBound: number
 ) {
   const skill = skills[index];
 
@@ -159,7 +161,9 @@ export default function SkillsPlayground() {
 
   useEffect(() => {
     const compactQuery = window.matchMedia("(max-width: 900px)");
-    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const reducedMotionQuery = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    );
 
     const syncMedia = () => {
       setCompact(compactQuery.matches);
@@ -190,7 +194,7 @@ export default function SkillsPlayground() {
 
       boundsRef.current = { width: rect.width, height: rect.height, topBound };
       runtimeRef.current = skills.map((_, index) =>
-        createBubble(index, rect.width, rect.height, compact, topBound),
+        createBubble(index, rect.width, rect.height, compact, topBound)
       );
     };
 
@@ -218,7 +222,10 @@ export default function SkillsPlayground() {
         return;
       }
 
-      const movedDistance = Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY);
+      const movedDistance = Math.hypot(
+        event.clientX - drag.startX,
+        event.clientY - drag.startY
+      );
 
       if (!drag.moved && movedDistance > 8) {
         drag.moved = true;
@@ -234,9 +241,13 @@ export default function SkillsPlayground() {
       const nextX = clamp(
         pointerX + drag.offsetX,
         bubble.baseRadius,
-        rect.width - bubble.baseRadius,
+        rect.width - bubble.baseRadius
       );
-      const nextY = clamp(pointerY + drag.offsetY, 0, rect.height - bubble.baseRadius * 0.4);
+      const nextY = clamp(
+        pointerY + drag.offsetY,
+        0,
+        rect.height - bubble.baseRadius * 0.4
+      );
 
       const instantVx = ((nextX - bubble.x) / dt) * (16.666 / 4.1);
       const instantVy = ((nextY - bubble.y) / dt) * (16.666 / 3.8);
@@ -273,7 +284,7 @@ export default function SkillsPlayground() {
           const clampedRelease = clampMagnitude(
             bubble.vx,
             bubble.vy,
-            compact ? 8.6 : 11,
+            compact ? 8.6 : 11
           );
           bubble.vx = clampedRelease.x;
           bubble.vy = clampedRelease.y;
@@ -328,13 +339,21 @@ export default function SkillsPlayground() {
 
         if (bubble.state === "floating") {
           bubble.vx +=
-            Math.sin(timestamp * 0.00013 * motionScale + bubble.phase) * 0.0019 * delta;
+            Math.sin(timestamp * 0.00013 * motionScale + bubble.phase) *
+            0.0019 *
+            delta;
           bubble.vx +=
-            Math.cos(timestamp * 0.00007 * motionScale + bubble.wobblePhase) * 0.00095 * delta;
+            Math.cos(timestamp * 0.00007 * motionScale + bubble.wobblePhase) *
+            0.00095 *
+            delta;
           bubble.vy +=
-            Math.sin(timestamp * 0.00017 * motionScale + bubble.bobPhase) * 0.0017 * delta;
+            Math.sin(timestamp * 0.00017 * motionScale + bubble.bobPhase) *
+            0.0017 *
+            delta;
           bubble.vy +=
-            Math.cos(timestamp * 0.00011 * motionScale + bubble.phase * 0.8) * 0.00095 * delta;
+            Math.cos(timestamp * 0.00011 * motionScale + bubble.phase * 0.8) *
+            0.00095 *
+            delta;
 
           if (bubble.y < topBound + bubble.baseRadius * 0.4) {
             bubble.vy += 0.01 * delta;
@@ -349,10 +368,10 @@ export default function SkillsPlayground() {
             speed > (compact ? 4.8 : 6.2)
               ? 0.972
               : speed > (compact ? 3.2 : 4.1)
-                ? 0.984
-                : speed > (compact ? 1.8 : 2.4)
-                  ? 0.992
-                  : 1;
+              ? 0.984
+              : speed > (compact ? 1.8 : 2.4)
+              ? 0.992
+              : 1;
 
           bubble.vx *= (reducedMotion ? 0.9968 : 0.9988) * extraDrag;
           bubble.vy *= (reducedMotion ? 0.9968 : 0.9982) * extraDrag;
@@ -376,17 +395,23 @@ export default function SkillsPlayground() {
           }
 
           bubble.vx +=
-            Math.sin(timestamp * 0.00105 * motionScale + bubble.phase * 1.2) * 0.009 * delta;
+            Math.sin(timestamp * 0.00105 * motionScale + bubble.phase * 1.2) *
+            0.009 *
+            delta;
           bubble.vy += (reducedMotion ? 0.006 : 0.012) * delta;
           bubble.vx *= 0.991;
           bubble.vy *= 0.994;
           bubble.x += bubble.vx * 4.4 * delta;
           bubble.y += bubble.vy * 5.6 * delta;
           bubble.rotationVelocity +=
-            Math.sin(timestamp * 0.001 * motionScale + bubble.wobblePhase) * 0.003;
+            Math.sin(timestamp * 0.001 * motionScale + bubble.wobblePhase) *
+            0.003;
           bubble.pressure *= 0.92;
 
-          if (bubble.y > height + bubble.baseRadius * 1.8 && timestamp >= bubble.respawnAt) {
+          if (
+            bubble.y > height + bubble.baseRadius * 1.8 &&
+            timestamp >= bubble.respawnAt
+          ) {
             respawnBubble(bubble, i, width, compact, topBound);
           }
         } else {
@@ -397,7 +422,13 @@ export default function SkillsPlayground() {
           const clampedVelocity = clampMagnitude(
             bubble.vx,
             bubble.vy,
-            bubble.state === "popped" ? (compact ? 0.4 : 0.5) : compact ? 8 : 10.2,
+            bubble.state === "popped"
+              ? compact
+                ? 0.4
+                : 0.5
+              : compact
+              ? 8
+              : 10.2
           );
           bubble.vx = clampedVelocity.x;
           bubble.vy = clampedVelocity.y;
@@ -414,16 +445,22 @@ export default function SkillsPlayground() {
         bubble.rotation += bubble.rotationVelocity * delta;
         bubble.rotationVelocity *= bubble.state === "popped" ? 0.992 : 0.985;
 
-        const sinkTime = bubble.state === "popped" ? timestamp - bubble.popAt : 0;
+        const sinkTime =
+          bubble.state === "popped" ? timestamp - bubble.popAt : 0;
         const localPulse =
-          1 + Math.sin(timestamp * 0.00095 * motionScale + bubble.phase) * 0.012 * motionScale;
+          1 +
+          Math.sin(timestamp * 0.00095 * motionScale + bubble.phase) *
+            0.012 *
+            motionScale;
         const dragScale = bubble.state === "dragging" ? 1.08 : 1;
         const popBurst =
           bubble.state === "popped"
             ? Math.sin(clamp(sinkTime / 220, 0, 1) * Math.PI)
             : 0;
-        const popFlash = bubble.state === "popped" ? 1 - clamp(sinkTime / 170, 0, 1) : 0;
-        const popHalo = bubble.state === "popped" ? 1 - clamp(sinkTime / 420, 0, 1) : 0;
+        const popFlash =
+          bubble.state === "popped" ? 1 - clamp(sinkTime / 170, 0, 1) : 0;
+        const popHalo =
+          bubble.state === "popped" ? 1 - clamp(sinkTime / 420, 0, 1) : 0;
         const sinkProgress =
           bubble.state === "popped"
             ? clamp(sinkTime / (compact ? 2600 : 3200), 0, 1)
@@ -433,40 +470,55 @@ export default function SkillsPlayground() {
           localPulse *
           dragScale *
           pressureScale *
-          (bubble.state === "popped" ? 1 + popBurst * 0.24 - sinkProgress * 0.12 : 1);
+          (bubble.state === "popped"
+            ? 1 + popBurst * 0.24 - sinkProgress * 0.12
+            : 1);
         const scaleY =
           localPulse *
           dragScale *
           pressureScale *
-          (bubble.state === "popped" ? 1 - popBurst * 0.16 - sinkProgress * 0.26 : 1);
-        const opacity = bubble.state === "popped" ? 0.96 - sinkProgress * 0.32 : 1;
+          (bubble.state === "popped"
+            ? 1 - popBurst * 0.16 - sinkProgress * 0.26
+            : 1);
+        const opacity =
+          bubble.state === "popped" ? 0.96 - sinkProgress * 0.32 : 1;
         const activeFilter = activeCategoryRef.current;
-        const filteredOut = activeFilter !== null && skill.category !== activeFilter;
-        const blur = bubble.state === "popped" ? `${0.2 + sinkProgress * 1.6}px` : "0px";
+        const filteredOut =
+          activeFilter !== null && skill.category !== activeFilter;
+        const blur =
+          bubble.state === "popped" ? `${0.2 + sinkProgress * 1.6}px` : "0px";
         const labelOpacity =
           bubble.state === "popped"
             ? `${1 - clamp(sinkTime / 520, 0, 1) * 0.72}`
             : filteredOut
-              ? "0"
-              : "1";
+            ? "0"
+            : "1";
         const shellOpacity =
           bubble.state === "popped"
             ? `${0.9 - sinkProgress * 0.24}`
             : filteredOut
-              ? "0"
-              : "1";
-        const ringScale = bubble.state === "popped" ? `${1 + popBurst * 0.55}` : "1";
+            ? "0"
+            : "1";
+        const ringScale =
+          bubble.state === "popped" ? `${1 + popBurst * 0.55}` : "1";
         const ringOpacity =
-          bubble.state === "popped" ? `${Math.max(0, 0.72 - sinkProgress * 0.58)}` : "0";
+          bubble.state === "popped"
+            ? `${Math.max(0, 0.72 - sinkProgress * 0.58)}`
+            : "0";
         const flashOpacity =
           bubble.state === "popped" ? `${Math.max(0, popFlash * 0.82)}` : "0";
         const splashOpacity =
           bubble.state === "popped" ? `${Math.max(0, popHalo * 0.38)}` : "0";
         const splashScale =
-          bubble.state === "popped" ? `${1 + popBurst * 0.9 + sinkProgress * 0.4}` : "1";
+          bubble.state === "popped"
+            ? `${1 + popBurst * 0.9 + sinkProgress * 0.4}`
+            : "1";
         const wakeOpacity =
-          bubble.state === "popped" ? `${Math.max(0, 0.34 - sinkProgress * 0.2)}` : "0";
-        const wakeScale = bubble.state === "popped" ? `${0.8 + sinkProgress * 1.7}` : "0.6";
+          bubble.state === "popped"
+            ? `${Math.max(0, 0.34 - sinkProgress * 0.2)}`
+            : "0";
+        const wakeScale =
+          bubble.state === "popped" ? `${0.8 + sinkProgress * 1.7}` : "0.6";
 
         node.style.width = `${bubble.radius * 2}px`;
         node.style.height = `${bubble.radius * 2}px`;
@@ -481,10 +533,10 @@ export default function SkillsPlayground() {
         node.style.zIndex = filteredOut
           ? "1"
           : bubble.state === "dragging"
-            ? "30"
-            : bubble.state === "popped"
-              ? "18"
-              : "14";
+          ? "30"
+          : bubble.state === "popped"
+          ? "18"
+          : "14";
         node.style.setProperty("--bubble-shell-opacity", shellOpacity);
         node.style.setProperty("--bubble-label-opacity", labelOpacity);
         node.style.setProperty("--bubble-ring-scale", ringScale);
@@ -504,9 +556,9 @@ export default function SkillsPlayground() {
           pointer.inside ? 0.07 : 0.035
         }), transparent 56%), radial-gradient(540px circle at ${glowX}px ${glowY}px, rgba(79,140,255,${
           pointer.inside ? 0.09 : 0.04
-        }), transparent 64%), radial-gradient(760px circle at ${width * 0.5}px ${
-          height * 0.88
-        }px, rgba(255,79,179,0.06), transparent 62%)`;
+        }), transparent 64%), radial-gradient(760px circle at ${
+          width * 0.5
+        }px ${height * 0.88}px, rgba(255,79,179,0.06), transparent 62%)`;
       }
 
       frameRef.current = window.requestAnimationFrame(render);
@@ -526,7 +578,9 @@ export default function SkillsPlayground() {
     };
   }, [compact, reducedMotion]);
 
-  const handleFieldPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+  const handleFieldPointerMove = (
+    event: React.PointerEvent<HTMLDivElement>
+  ) => {
     const field = fieldRef.current;
 
     if (!field) {
@@ -539,7 +593,10 @@ export default function SkillsPlayground() {
     pointerRef.current.y = event.clientY - rect.top;
   };
 
-  const handleBubblePointerDown = (index: number, event: React.PointerEvent<HTMLDivElement>) => {
+  const handleBubblePointerDown = (
+    index: number,
+    event: React.PointerEvent<HTMLDivElement>
+  ) => {
     const field = fieldRef.current;
     const bubble = runtimeRef.current[index];
 
@@ -614,7 +671,10 @@ export default function SkillsPlayground() {
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(114,84,255,0.18),transparent_24%),radial-gradient(circle_at_18%_24%,rgba(84,157,255,0.18),transparent_24%),radial-gradient(circle_at_82%_14%,rgba(255,98,185,0.16),transparent_22%),radial-gradient(circle_at_50%_92%,rgba(255,169,71,0.12),transparent_28%),linear-gradient(180deg,rgba(10,11,30,0.98),rgba(5,7,18,1))]" />
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.018)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.018)_1px,transparent_1px)] bg-[size:58px_58px] opacity-25" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.08),transparent_24%)]" />
-        <div ref={glowRef} className="pointer-events-none absolute inset-0 transition-opacity duration-300" />
+        <div
+          ref={glowRef}
+          className="pointer-events-none absolute inset-0 transition-opacity duration-300"
+        />
 
         {STAR_POINTS.map((star, index) => (
           <span
@@ -626,7 +686,9 @@ export default function SkillsPlayground() {
               width: `${star.size}px`,
               height: `${star.size}px`,
               opacity: star.opacity,
-              boxShadow: `0 0 ${star.size * 8}px rgba(255,255,255,${star.opacity * 0.55})`,
+              boxShadow: `0 0 ${star.size * 8}px rgba(255,255,255,${
+                star.opacity * 0.55
+              })`,
             }}
           />
         ))}
@@ -639,8 +701,8 @@ export default function SkillsPlayground() {
             Skills
           </h1>
           <p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-white/62 md:text-lg">
-            A little bit different skills section. Drag/fling the bubbles around and click to pop
-            them.
+            A little bit different skills section. Drag/fling the bubbles around
+            and click to pop them.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-sm text-white/72">
@@ -650,7 +712,7 @@ export default function SkillsPlayground() {
                 type="button"
                 onClick={() =>
                   setActiveCategory((current) =>
-                    current === cluster.category ? null : cluster.category,
+                    current === cluster.category ? null : cluster.category
                   )
                 }
                 className={`flex items-center gap-2 rounded-full border px-3 py-1.5 transition-colors ${
@@ -660,11 +722,16 @@ export default function SkillsPlayground() {
                 }`}
                 style={{
                   borderColor:
-                    activeCategory === cluster.category ? `${cluster.accent}66` : "transparent",
+                    activeCategory === cluster.category
+                      ? `${cluster.accent}66`
+                      : "transparent",
                   backgroundColor:
-                    activeCategory === cluster.category ? `${cluster.accent}16` : undefined,
+                    activeCategory === cluster.category
+                      ? `${cluster.accent}16`
+                      : undefined,
                   color:
-                    activeCategory === null || activeCategory === cluster.category
+                    activeCategory === null ||
+                    activeCategory === cluster.category
                       ? cluster.accent
                       : `${cluster.accent}aa`,
                 }}

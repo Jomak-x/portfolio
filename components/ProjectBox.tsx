@@ -2,27 +2,28 @@ import Image from "next/image";
 
 type ProjectBoxProps = {
   name: string;
-
   technologies: string[];
   short_desc: string;
-  long_desc: string;
-  pictures: string[];
   borderColor?: string;
-  nameColor?: string;
+  textcolor?: string;
   startimg?: string;
   startvid?: string;
+  location: string;
+  bgcolor?: string;
+  onClick?: () => void;
 };
 
 export default function ProjectBox({
   name,
   technologies,
   short_desc,
-  long_desc,
-  pictures,
   borderColor = "border-orange-400",
-  nameColor = "text-orange-400",
+  textcolor = "text-orange-400",
+  bgcolor = "bg-gray-900",
   startimg,
   startvid,
+  location,
+  onClick,
 }: ProjectBoxProps) {
   const maxVisibleTech = 3;
   const visibleTech = technologies.slice(0, maxVisibleTech);
@@ -30,7 +31,8 @@ export default function ProjectBox({
 
   return (
     <div
-      className={`bg-gray-900 border-4 rounded-3xl overflow-hidden h-140 w-110 ${borderColor}`}
+      onClick={onClick}
+      className={`${bgcolor} border-4 rounded-3xl overflow-hidden h-140 w-full ${borderColor}`}
     >
       <div className="relative h-55">
         {startvid ? (
@@ -54,7 +56,13 @@ export default function ProjectBox({
         ) : null}
       </div>
       <div>
-        <div className={`text-center mt-4 text-2xl ${nameColor}`}>{name}</div>
+        <div className="flex items-center line-clamp-1">
+          <div className={`mt-4 font-semibold ml-6 text-2xl ${textcolor}`}>
+            {name}
+          </div>
+          <div className="mt-3 leading-none ml-6 text-gray-400 text-3xl">|</div>
+          <div className="mt-4 ml-3 text-xl text-gray-400">{location}</div>
+        </div>
         <div className={`text-xl h-40 m-3 flex items-center`}>
           <div className="line-clamp-5">{short_desc}</div>
         </div>
