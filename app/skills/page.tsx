@@ -1,5 +1,5 @@
-export default function skills() {
-  return (
-    <h1>Hey skills</h1>
-  );
+import SkillsPlayground from "@/components/SkillsPlayground";
+
+export default function SkillsPage() {
+  return <SkillsPlayground />;
 }
