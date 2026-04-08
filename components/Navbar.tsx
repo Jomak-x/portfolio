@@ -4,11 +4,6 @@ import { useState, useRef, useMemo } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { CgFileDocument } from "react-icons/cg";
 
-interface NavItem {
-  name: string;
-  link: string;
-  picture?: string;
-}
 
 const navItems = [
   { name: "Home", link: "/" },

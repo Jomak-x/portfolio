@@ -1,6 +1,6 @@
 import Hero from "@/components/Hero";
 import Imagecarousel from "@/components/Imagecarousel";
-import Textbox1 from "@/components/Textbox1";
+import Textbox from "@/components/Textbox1";
 import { profile } from "@/data/profile";
 import Image from "next/image";
 
@@ -8,10 +8,10 @@ export default function Home() {
   return (
     <div>
       <Hero />
-      <div className="flex">
-        <div>
-          <Textbox1 />
-        </div>
+      <div className="flex justify-center items-center gap-8">
+        {" "}
+        {/* Center children horizontally with a gap */}
+        <Textbox text={profile.text} />
         <Imagecarousel boxWidth={560} boxHeight={360}>
           {profile.hackathonimg.map((s, idx) => (
             <Image
