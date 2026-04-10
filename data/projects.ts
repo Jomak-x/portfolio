@@ -31,7 +31,8 @@ export const projects = {
         bgcolor: "bg-cyan-400/10",
         textcolor: "text-cyan-300",
         people: "",
-        github: ""
+        github: "",
+        mdfile: "./Projects/CrisisLens.md",
     },
     slAIde: {
         name: "slAIde",
@@ -62,7 +63,8 @@ export const projects = {
         bgcolor: "bg-orange-400/10",
         textcolor: "text-orange-300",
         people: "",
-        github: "https://github.com/Jomak-x/slAIde.git"
+        github: "https://github.com/Jomak-x/slAIde.git",
+        mdfile: "./Projects/slAIde.md",
     },
     FocusForge: {
         name: "FocusForge",
@@ -94,7 +96,8 @@ export const projects = {
         bgcolor: "bg-blue-400/10",
         textcolor: "text-blue-300",
         people: "Jakob Laise, Daniel Ocampo, Dylan Moo Hernandez, Peter Petro",
-        github: "https://github.com/Jomak-x/GeminKnights-FocusForge.git"
+        github: "https://github.com/Jomak-x/GeminKnights-FocusForge.git",
+        mdfile: "./Projects/FocusForge.md",
     },
     HireTune: {
         name: "HireTune",
@@ -124,7 +127,8 @@ export const projects = {
         bgcolor: "bg-emerald-400/10",
         textcolor: "text-emerald-300",
         people: "",
-        github: "https://github.com/ThomasT-GitHub/HireTune.git"
+        github: "https://github.com/ThomasT-GitHub/HireTune.git",
+        mdfile: "./Projects/HireTune.md",
     },
     CS50: {
         name: "CS50x",
@@ -151,6 +155,7 @@ export const projects = {
         bgcolor: "bg-red-400/10",
         textcolor: "text-red-300",
         people: "",
-        github: ""
+        github: "",
+        mdfile: "./Projects/CS50.md",
     },
 };

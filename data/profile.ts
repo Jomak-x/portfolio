@@ -4,8 +4,8 @@ export const profile = {
     titles: ["Software Engineer", "Computer Science Student", "Researcher", "Traveler"],
     image: "/home/First_Page/profile1.png",
     university: "University of Central Florida",
-    hackathonimg: ["/home/First_page/hackathon1.png", "/home/First_page/hackathon2.png", "/home/First_page/hackathon3.png", "/home/First_page/hackathon4.png"],
-    personalimg: ["/home/First_page/personal1.png", "/home/First_page/personal2.png", "/home/First_page/personal3.png", "/home/First_page/personal4.png"],
+    hackathonimg: ["/home/First_Page/Hackathon/hackathon1.png", "/home/First_Page/Hackathon/hackathon2.png", "/home/First_Page/Hackathon/hackathon3.png", "/home/First_Page/Hackathon/hackathon4.png"],
+    personalimg: ["/home/First_Page/personal/personal1.png", "/home/First_Page/personal/personal2.png", "/home/First_Page/personal/personal3.png", "/home/First_Page/personal/pesonal4.png"],
     text: "Hi I am Jakob",
 
 
