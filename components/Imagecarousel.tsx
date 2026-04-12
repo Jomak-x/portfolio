@@ -11,6 +11,7 @@ type CarouselProps = {
   autoSlide?: boolean;
   autoSlideInterval?: number;
   showDots?: boolean;
+  bordercolor?: string;
 };
 
 export default function ImageCarousel({
@@ -21,6 +22,7 @@ export default function ImageCarousel({
   autoSlide = false,
   autoSlideInterval = 3000,
   showDots = true,
+  bordercolor = "border-orange-400",
 }: CarouselProps) {
   const slides = useMemo(() => React.Children.toArray(children), [children]);
   const [curr, setCurr] = useState(0);
@@ -56,7 +58,7 @@ export default function ImageCarousel({
 
   return (
     <div
-      className="m-5 rounded-3xl border-4 border-orange-400 bg-black/10 shadow-lg"
+      className={`m-5 rounded-3xl border-4 ${bordercolor} bg-black/10 shadow-lg`}
       style={{ width: resolvedWidth, height: resolvedHeight }}
     >
       <div

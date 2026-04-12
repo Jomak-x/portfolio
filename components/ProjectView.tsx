@@ -2,13 +2,14 @@
 import { useState } from "react";
 import ProjectBox from "./ProjectBox";
 import Projectexpand from "./Projectexpand";
-import { projects } from "@/data/projects";
+import { projects as baseProjects } from "@/data/projects";
 
-type ProjectKey = keyof typeof projects;
+type BaseProject = (typeof baseProjects)[keyof typeof baseProjects];
+type ProjectWithMarkdown = BaseProject & { markdown: string };
+type ProjectsMap = Record<string, ProjectWithMarkdown>;
 
-export default function ProjectView() {
-
-  const [selectedProjectKey, setSelectedProjectKey] = useState<ProjectKey | null>(
+export default function ProjectView({ projects }: { projects: ProjectsMap }) {
+  const [selectedProjectKey, setSelectedProjectKey] = useState<string | null>(
     null
   );
 
@@ -16,50 +17,32 @@ export default function ProjectView() {
     ? projects[selectedProjectKey]
     : null;
 
-  const handleClose = () => {
-    setSelectedProjectKey(null);
-  };
-
   return (
     <div>
-      <div>
-        {selectedProject && (
-          <Projectexpand
-            project={selectedProject}
-            onClick={handleClose}
-          ></Projectexpand>
-        )}
-      </div>
+      {selectedProject && (
+        <Projectexpand
+          project={selectedProject}
+          onClick={() => setSelectedProjectKey(null)}
+        />
+      )}
+
       <div className="flex grid grid-cols-1 xl:grid-cols-3 md:grid-cols-2 gap-10">
-        {Object.entries(projects).map(([projectkey, projects]) => (
+        {Object.entries(projects).map(([projectKey, project]) => (
           <ProjectBox
-            key={projectkey}
-            onClick={() => setSelectedProjectKey(projectkey as ProjectKey)}
-            name={projects.name}
-            technologies={projects.technologies}
-            short_desc={projects.short_desc}
-            bgcolor={projects.bgcolor}
-            borderColor={projects.bordercolor}
-            textcolor={projects.textcolor}
-            startvid={projects.startvid}
-            startimg={projects.startimg}
-            location={projects.location}
+            key={projectKey}
+            onClick={() => setSelectedProjectKey(projectKey)}
+            name={project.name}
+            technologies={project.technologies}
+            short_desc={project.short_desc}
+            bgcolor={project.bgcolor}
+            borderColor={project.bordercolor}
+            textcolor={project.textcolor}
+            startvid={project.startvid}
+            startimg={project.startimg}
+            location={project.location}
           />
         ))}
       </div>
     </div>
   );
 }
-type ProjectBoxProps = {
-  name: string;
-  technologies: string[];
-  short_desc: string;
-  borderColor?: string;
-  nameColor?: string;
-  startimg?: string;
-  startvid?: string;
-  location: string;
-  bgcolor?: string;
-  onClick?: () => void;
-};
-
